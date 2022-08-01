@@ -18,11 +18,11 @@
     "colId": "fb8d5a30-03c5-4bdc-b6d0-1d715031f03d",
     "containerId": "3f692ebc-15b0-4d4f-ac83-002fa3de9b53",
     "name": "Get specific user",
-    "url": "https://localhost:5001/user/2",
+    "url": "https://localhost:5001/user/6",
     "method": "GET",
     "sortNum": 20000,
     "created": "2022-08-01T09:09:34.993Z",
-    "modified": "2022-08-01T09:23:34.243Z",
+    "modified": "2022-08-01T10:16:51.606Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -36,12 +36,12 @@
     "method": "POST",
     "sortNum": 40000,
     "created": "2022-08-01T09:24:04.598Z",
-    "modified": "2022-08-01T09:24:41.793Z",
+    "modified": "2022-08-01T10:16:42.053Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\r\n  \"username\": \"InsertedGuy\",\r\n  \"password\": \"ins123\",\r\n  \"firstName\": \"Inserted\",\r\n  \"lastName\": \"Guy\",\r\n  \"isCompany\": false\r\n}",
+      "raw": "{\n  \"username\": \"InsertedGuy\",\n  \"password\": \"ins123\",\n  \"firstName\": \"Inserted\",\n  \"lastName\": \"Guy\",\n  \"isCompany\": false\n}",
       "form": []
     },
     "tests": []
@@ -55,12 +55,12 @@
     "method": "PUT",
     "sortNum": 50000,
     "created": "2022-08-01T09:25:06.526Z",
-    "modified": "2022-08-01T09:25:33.493Z",
+    "modified": "2022-08-01T10:26:42.776Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\r\n  \"id\": 5,\r\n  \"username\": \"ChangedGuy\",\r\n  \"password\": \"ins123\",\r\n  \"firstName\": \"Inserted\",\r\n  \"lastName\": \"Guy\",\r\n  \"isCompany\": false\r\n}",
+      "raw": "{\n  \"id\": 6,\n  \"username\": \"ChangedGuy2\",\n  \"password\": \"ch1234\",\n  \"firstName\": \"Changed2\",\n  \"lastName\": \"Guy2\",\n  \"isCompany\": false\n}",
       "form": []
     },
     "tests": []
@@ -70,11 +70,11 @@
     "colId": "fb8d5a30-03c5-4bdc-b6d0-1d715031f03d",
     "containerId": "3f692ebc-15b0-4d4f-ac83-002fa3de9b53",
     "name": "Delele user",
-    "url": "https://localhost:5001/user/5",
+    "url": "https://localhost:5001/user/6",
     "method": "DELETE",
     "sortNum": 60000,
     "created": "2022-08-01T09:25:52.119Z",
-    "modified": "2022-08-01T09:26:11.100Z",
+    "modified": "2022-08-01T10:33:31.449Z",
     "headers": [],
     "params": [],
     "tests": []

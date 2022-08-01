@@ -4,47 +4,25 @@
     {
         public static WebApplication SetUserEndpoints(this WebApplication app)
         {
-            app.MapGet("/", () => "Welcome to DogeFriends :)").RequireAuthorization();
+            app.MapGet("/", () => "Welcome to DogeFriends :)");
 
-            app.MapGet("/user", async (DataContext context) =>
-                await context.Users.ToListAsync());
+            app.MapGet("/user", async (IUserRepository userRepository) =>
+                Results.Ok(await userRepository.GetAllUsers()));
 
-            app.MapGet("/user/{id}", async (DataContext context, int id) =>
-                await context.Users.FirstOrDefaultAsync(x => x.Id == id) is User user ? Results.Ok(user) : Results.NotFound("User not found."));
+            app.MapGet("/user/{id}", async (IUserRepository userRepository, int id) =>
+                await userRepository.GetUser(id) is User user ? Results.Ok(user) : Results.NotFound("User not found."));
 
-            app.MapPost("/user", async (DataContext context, [FromBody] User user) =>
+            app.MapPost("/user", async (IUserRepository userRepository, [FromBody] User user) =>
             {
-                context.Users.Add(user);
-                await context.SaveChangesAsync();
-                return Results.Created($"/users/{user.Id}", user);
+                await userRepository.InsertUser(user);
+                Results.Created($"/user/{user.Id}", user);
             });
 
-            app.MapPut("/user", async (DataContext context, [FromBody] User user) =>
-            {
-                var dbUser = await context.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
+            app.MapPut("/user", async (IUserRepository userRepository, [FromBody] User user) =>
+                await userRepository.UpdateUser(user) is User updatedUser ? Results.Ok(updatedUser) : Results.NotFound("User cannot be updated."));
 
-                if (dbUser == null) return Results.NotFound("User not found.");
-
-                dbUser.FirstName = user.FirstName;
-                dbUser.Password = user.Password;
-                dbUser.LastName = user.LastName;
-                dbUser.IsCompany = user.IsCompany;
-                dbUser.ProfilePhoto = user.ProfilePhoto;
-
-                context.Users.Update(dbUser);
-                await context.SaveChangesAsync();
-                return Results.Ok(dbUser);
-            });
-
-            app.MapDelete("/user/{id}", async (DataContext context, int id) =>
-            {
-                var dbUser = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
-                if (dbUser == null) return Results.NotFound("User not found.");
-
-                context.Users.Remove(dbUser);
-                await context.SaveChangesAsync();
-                return Results.Ok("User was deleted successfuly.");
-            });
+            app.MapDelete("/user/{id}", async (IUserRepository userRepository, int id) =>
+                await userRepository.DeleteUser(id) ? Results.Ok("User was deleted.") : Results.BadRequest("User cannot be deleted"));
 
             return app;
         }
