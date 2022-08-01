@@ -7,5 +7,6 @@ namespace DogeFriendsAPI.Data
         public Task<User> InsertUser(User user);
         public Task<User?> UpdateUser(User user);
         public Task<Boolean> DeleteUser(int id);
+        public Task SaveChanges();
     }
 }

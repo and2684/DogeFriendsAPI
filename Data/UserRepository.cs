@@ -21,7 +21,8 @@ namespace DogeFriendsAPI.Data
         public async Task<User> InsertUser(User user)
         {
             _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            
+            await SaveChanges();
             return user;
         }
 
@@ -37,8 +38,8 @@ namespace DogeFriendsAPI.Data
             dbUser.IsCompany = user.IsCompany;
             dbUser.ProfilePhoto = user.ProfilePhoto;
             _context.Users.Update(dbUser);
-            await _context.SaveChangesAsync();
 
+            await SaveChanges();
             return dbUser;
         }
 
@@ -48,10 +49,14 @@ namespace DogeFriendsAPI.Data
             if (dbUser == null)
                 return false;
             
-            _context.Users.Remove(dbUser);
-            await _context.SaveChangesAsync();
-
+            _context.Users.Remove(dbUser);           
+            await SaveChanges();
             return true;
+        }
+
+        public async Task SaveChanges()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }
