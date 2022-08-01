@@ -1,0 +1,82 @@
+[
+  {
+    "_id": "645491f9-1515-4475-9bc7-cba07f53ae84",
+    "colId": "fb8d5a30-03c5-4bdc-b6d0-1d715031f03d",
+    "containerId": "3f692ebc-15b0-4d4f-ac83-002fa3de9b53",
+    "name": "Get all users",
+    "url": "https://localhost:5001/user",
+    "method": "GET",
+    "sortNum": 10000,
+    "created": "2022-08-01T09:09:04.957Z",
+    "modified": "2022-08-01T09:14:09.099Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "64cc0e51-1746-48e5-9e71-b6a655255fc3",
+    "colId": "fb8d5a30-03c5-4bdc-b6d0-1d715031f03d",
+    "containerId": "3f692ebc-15b0-4d4f-ac83-002fa3de9b53",
+    "name": "Get specific user",
+    "url": "https://localhost:5001/user/2",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2022-08-01T09:09:34.993Z",
+    "modified": "2022-08-01T09:23:34.243Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "b944dc4a-8cd7-4a7b-b860-863b16541965",
+    "colId": "fb8d5a30-03c5-4bdc-b6d0-1d715031f03d",
+    "containerId": "3f692ebc-15b0-4d4f-ac83-002fa3de9b53",
+    "name": "Insert user",
+    "url": "https://localhost:5001/user/",
+    "method": "POST",
+    "sortNum": 40000,
+    "created": "2022-08-01T09:24:04.598Z",
+    "modified": "2022-08-01T09:24:41.793Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\r\n  \"username\": \"InsertedGuy\",\r\n  \"password\": \"ins123\",\r\n  \"firstName\": \"Inserted\",\r\n  \"lastName\": \"Guy\",\r\n  \"isCompany\": false\r\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "66cbaed8-a5bd-4089-ad39-9ec4d40beb09",
+    "colId": "fb8d5a30-03c5-4bdc-b6d0-1d715031f03d",
+    "containerId": "3f692ebc-15b0-4d4f-ac83-002fa3de9b53",
+    "name": "Update user",
+    "url": "https://localhost:5001/user/",
+    "method": "PUT",
+    "sortNum": 50000,
+    "created": "2022-08-01T09:25:06.526Z",
+    "modified": "2022-08-01T09:25:33.493Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\r\n  \"id\": 5,\r\n  \"username\": \"ChangedGuy\",\r\n  \"password\": \"ins123\",\r\n  \"firstName\": \"Inserted\",\r\n  \"lastName\": \"Guy\",\r\n  \"isCompany\": false\r\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "05aba9a3-f578-4bf1-80cb-41cec9e0fe0a",
+    "colId": "fb8d5a30-03c5-4bdc-b6d0-1d715031f03d",
+    "containerId": "3f692ebc-15b0-4d4f-ac83-002fa3de9b53",
+    "name": "Delele user",
+    "url": "https://localhost:5001/user/5",
+    "method": "DELETE",
+    "sortNum": 60000,
+    "created": "2022-08-01T09:25:52.119Z",
+    "modified": "2022-08-01T09:26:11.100Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  }
+]

@@ -12,16 +12,16 @@
             app.MapGet("/user/{id}", async (DataContext context, int id) =>
                 await context.Users.FirstOrDefaultAsync(x => x.Id == id) is User user ? Results.Ok(user) : Results.NotFound("User not found."));
 
-            app.MapPost("/user", async (DataContext context, User user) =>
+            app.MapPost("/user", async (DataContext context, [FromBody] User user) =>
             {
                 context.Users.Add(user);
                 await context.SaveChangesAsync();
-                return Results.Ok(user);
+                return Results.Created($"/users/{user.Id}", user);
             });
 
-            app.MapPut("/user", async (DataContext context, User user) =>
+            app.MapPut("/user", async (DataContext context, [FromBody] User user) =>
             {
-                var dbUser = await context.Users.FindAsync(user.Id);
+                var dbUser = await context.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
 
                 if (dbUser == null) return Results.NotFound("User not found.");
 
