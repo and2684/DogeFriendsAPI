@@ -1,8 +1,5 @@
-using DogeFriendsAPI.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
-using DogeFriendsAPI.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 

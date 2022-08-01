@@ -1,19 +1,16 @@
-﻿using DogeFriendsAPI.Data;
-using Microsoft.EntityFrameworkCore;
-
-namespace DogeFriendsAPI.Endpoints
+﻿namespace DogeFriendsAPI.Endpoints
 {
     public static class UserEndpoints
     {
         public static WebApplication SetUserEndpoints(this WebApplication app)
         {
-            app.MapGet("/", () => "Welcome to DogeFriends :)");
+            app.MapGet("/", () => "Welcome to DogeFriends :)").RequireAuthorization();
 
             app.MapGet("/user", async (DataContext context) =>
                 await context.Users.ToListAsync());
 
             app.MapGet("/user/{id}", async (DataContext context, int id) =>
-                await context.Users.FindAsync(id) is User user ? Results.Ok(user) : Results.NotFound("User not found."));
+                await context.Users.FirstOrDefaultAsync(x => x.Id == id) is User user ? Results.Ok(user) : Results.NotFound("User not found."));
 
             app.MapPost("/user", async (DataContext context, User user) =>
             {
@@ -41,7 +38,7 @@ namespace DogeFriendsAPI.Endpoints
 
             app.MapDelete("/user/{id}", async (DataContext context, int id) =>
             {
-                var dbUser = await context.Users.FindAsync(id);
+                var dbUser = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
                 if (dbUser == null) return Results.NotFound("User not found.");
 
                 context.Users.Remove(dbUser);

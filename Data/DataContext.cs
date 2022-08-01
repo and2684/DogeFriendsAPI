@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace DogeFriendsAPI.Data
+﻿namespace DogeFriendsAPI.Data
 {
     public class DataContext : DbContext
     {
