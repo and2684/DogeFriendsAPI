@@ -1,4 +1,7 @@
-﻿namespace DogeFriendsAPI.Endpoints
+﻿using DogeFriendsAPI.Dto;
+using DogeFriendsAPI.XmlSerialization;
+
+namespace DogeFriendsAPI.Endpoints
 {
     public static class UserEndpoints
     {
@@ -15,6 +18,12 @@
                 .WithName("Get all users")
                 .WithTags("Get commands");
 
+            app.MapGet("/user/xml", async (IUserRepository userRepository) =>
+                Results.Extensions.Xml(await userRepository.GetAllUsersAsync()))
+                .Produces<User>(StatusCodes.Status200OK)
+                .WithName("Get all users as xml")
+                .WithTags("Get commands");                
+
             app.MapGet("/user/{id}", async (IUserRepository userRepository, int id) =>
                 await userRepository.GetUserAsync(id) is User user ? Results.Ok(user) : Results.NotFound("User not found."))
                 .Produces<List<User>>(StatusCodes.Status200OK)
@@ -22,13 +31,20 @@
                 .WithName("Get user by id")
                 .WithTags("Get commands");
 
-            app.MapGet("/user/search/{username}", async (IUserRepository userRepository, string username) =>
+            app.MapGet("/user/search/username/{username}", async (IUserRepository userRepository, string username) =>
                 await userRepository.GetUsersAsync(username) is List<User> userList ? Results.Ok(userList) : Results.NotFound("User not found."))
                 .Produces<List<User>>(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status404NotFound)
                 .WithName("Get user by username")
-                .WithTags("Get commands")
-                .ExcludeFromDescription();                
+                .WithTags("Get commands");
+//                .ExcludeFromDescription(); // This method makes endpoint invisible for swagger but still usable!
+
+            app.MapGet("/person/search/{fullname}", async (IUserRepository userRepository, string fullname) =>
+                await userRepository.GetPersonsAsync(fullname) is List<PersonDto> userList ? Results.Ok(userList) : Results.NotFound("Person not found."))
+                .Produces<List<User>>(StatusCodes.Status200OK)
+                .Produces(StatusCodes.Status404NotFound)
+                .WithName("Get person")
+                .WithTags("Get commands");
 
             app.MapPost("/user", async (IUserRepository userRepository, [FromBody] User user) =>
                 {
