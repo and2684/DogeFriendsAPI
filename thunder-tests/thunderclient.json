@@ -78,5 +78,19 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "c0700c3b-fd31-43ce-b9ff-6d079de2d06a",
+    "colId": "fb8d5a30-03c5-4bdc-b6d0-1d715031f03d",
+    "containerId": "3f692ebc-15b0-4d4f-ac83-002fa3de9b53",
+    "name": "Get user by username",
+    "url": "https://localhost:5001/user/search/h",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2022-08-02T05:12:11.300Z",
+    "modified": "2022-08-02T05:12:46.186Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

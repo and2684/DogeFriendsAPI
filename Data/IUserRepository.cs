@@ -2,11 +2,12 @@ namespace DogeFriendsAPI.Data
 {
     public interface IUserRepository
     {
-        public Task<List<User>> GetAllUsers();
-        public Task<User?> GetUser(int id);
-        public Task<User> InsertUser(User user);
-        public Task<User?> UpdateUser(User user);
-        public Task<Boolean> DeleteUser(int id);
-        public Task SaveChanges();
+        public Task<List<User>> GetAllUsersAsync();
+        public Task<User?> GetUserAsync(int id);
+        public Task<List<User>> GetUsersAsync(string username);
+        public Task<User> InsertUserAsync(User user);
+        public Task<User?> UpdateUserAsync(User user);
+        public Task<Boolean> DeleteUserAsync(int id);
+        public Task SaveChangesAsync();
     }
 }

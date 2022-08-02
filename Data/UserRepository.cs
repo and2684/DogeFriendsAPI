@@ -8,25 +8,30 @@ namespace DogeFriendsAPI.Data
             _context = context;
         }
 
-        public async Task<List<User>> GetAllUsers()
+        public async Task<List<User>> GetAllUsersAsync()
         {
             return await _context.Users.ToListAsync();
         }
 
-        public async Task<User?> GetUser(int id)
+        public async Task<User?> GetUserAsync(int id)
         {
             return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<User> InsertUser(User user)
+        public async Task<List<User>> GetUsersAsync(string username)
+        {
+            return await _context.Users.Where(x => x.Username.ToLower().Contains(username.ToLower())).ToListAsync();
+        }        
+
+        public async Task<User> InsertUserAsync(User user)
         {
             _context.Users.Add(user);
             
-            await SaveChanges();
+            await SaveChangesAsync();
             return user;
         }
 
-        public async Task<User?> UpdateUser(User user)
+        public async Task<User?> UpdateUserAsync(User user)
         {
             var dbUser = await _context.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
             if (dbUser == null) return null;
@@ -39,22 +44,22 @@ namespace DogeFriendsAPI.Data
             dbUser.ProfilePhoto = user.ProfilePhoto;
             _context.Users.Update(dbUser);
 
-            await SaveChanges();
+            await SaveChangesAsync();
             return dbUser;
         }
 
-        public async Task<Boolean> DeleteUser(int id)
+        public async Task<Boolean> DeleteUserAsync(int id)
         {
             var dbUser = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
             if (dbUser == null)
                 return false;
             
             _context.Users.Remove(dbUser);           
-            await SaveChanges();
+            await SaveChangesAsync();
             return true;
         }
 
-        public async Task SaveChanges()
+        public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
         }
