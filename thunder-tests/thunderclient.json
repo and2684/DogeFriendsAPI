@@ -120,5 +120,19 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "952e662d-1c9f-4c59-9d29-644c6585cb54",
+    "colId": "fb8d5a30-03c5-4bdc-b6d0-1d715031f03d",
+    "containerId": "",
+    "name": "Global exception handling test",
+    "url": "https://localhost:5001/test/exception",
+    "method": "GET",
+    "sortNum": 100000,
+    "created": "2022-08-03T06:30:26.386Z",
+    "modified": "2022-08-03T06:30:26.386Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

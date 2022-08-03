@@ -1,6 +1,7 @@
 using API.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
+using API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,9 @@ app.UseAuthorization();
 
 var scopeRequiredByApi = app.Configuration["AzureAd:Scopes"];
 
+app.UseMiddleware<ExceptionMiddleware>();
+
 app.SetUserEndpoints();
+app.SetTestEndpoints();
 
 app.Run();
