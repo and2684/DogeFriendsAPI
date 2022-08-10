@@ -26,14 +26,14 @@ namespace DogeFriendsAPI.Data
 
         public async Task<List<User>> GetUsersAsync(string username)
         {
-            return await _context.Users.Where(x => x.Username.ToLowerInvariant().Contains(username.ToLowerInvariant())).ToListAsync();
+            return await _context.Users.Where(x => x.Username.ToLower().Contains(username.ToLower())).ToListAsync();
         }
 
         public async Task<List<PersonDto>> GetPersonsAsync(string fullname)
         {
             var personList = await _context.Users.ProjectTo<PersonDto>(_mapper.ConfigurationProvider).ToListAsync();
             return personList.Where(x => x.FullName.ToLowerInvariant().Contains(fullname.ToLowerInvariant())).ToList();
-        }        
+        }
 
         public async Task<User> InsertUserAsync(User user)
         {
