@@ -112,7 +112,7 @@ namespace DogeFriendsAPI.Data
 
         public async Task<UserDto> LoginUser(LoginDto loginDto)
         {
-            var user = await _context.Users.Where(x => x.Username == loginDto.Username.ToLower()).SingleOrDefaultAsync();
+            var user = await _context.Users.Where(x => x.Username == loginDto.Username.ToLower()).FirstOrDefaultAsync();
 
             return new UserDto
             {
