@@ -20,7 +20,7 @@ namespace DogeFriendsAPI.XmlSerialization
     // Статик класс для расширения.
     static class XmlResultExtensions
     {
-        public static IResult Xml<T>(this IResultExtensions _, T result)
+        public static IResult ConvertToXml<T>(this IResultExtensions _, T result)
         {
             return new XmlResult<T>(result);
         }

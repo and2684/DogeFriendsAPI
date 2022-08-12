@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using AutoMapper.QueryableExtensions;
 using DogeFriendsAPI.Dto;
 
@@ -7,26 +8,31 @@ namespace DogeFriendsAPI.Data
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+        private readonly ITokenService _tokenService;
 
-        public UserRepository(DataContext context, IMapper mapper)
+        public UserRepository(DataContext context, IMapper mapper, ITokenService tokenService)
         {
             _context = context;
             _mapper = mapper;
+            _tokenService = tokenService;
         }
 
-        public async Task<List<User>> GetAllUsersAsync()
+        public async Task<List<UserShowDto>> GetAllUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _context.Users.ToListAsync();
+            return _mapper.Map<List<User>, List<UserShowDto>>(users);;
         }
 
-        public async Task<User?> GetUserAsync(int id)
+        public async Task<UserShowDto?> GetUserAsync(int id)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            return (user == null) ? null : _mapper.Map<User, UserShowDto>(user);
         }
 
-        public async Task<List<User>> GetUsersAsync(string username)
+        public async Task<List<UserShowDto>> GetUsersAsync(string username)
         {
-            return await _context.Users.Where(x => x.Username.ToLower().Contains(username.ToLower())).ToListAsync();
+            var users = await _context.Users.Where(x => x.Username.ToLower().Contains(username.ToLower())).ToListAsync();
+            return _mapper.Map<List<User>, List<UserShowDto>>(users);;            
         }
 
         public async Task<List<PersonDto>> GetPersonsAsync(string fullname)
@@ -49,7 +55,6 @@ namespace DogeFriendsAPI.Data
             if (dbUser == null) return null;
 
             dbUser.Username = user.Username;
-            dbUser.Password = user.Password;
             dbUser.FirstName = user.FirstName;
             dbUser.LastName = user.LastName;
             dbUser.IsCompany = user.IsCompany;
@@ -74,6 +79,46 @@ namespace DogeFriendsAPI.Data
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<UserDto> RegisterUser(RegisterDto registerDto)
+        {
+            // var user = _mapper.Map<User>(registerDto);
+
+            using var hmac = new HMACSHA512();
+
+            var user = new User();
+
+            user.Username = registerDto.Username.ToLower();
+            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
+            user.PasswordSalt = hmac.Key;
+
+            user.FirstName = registerDto.FirstName;
+            user.LastName = registerDto.LastName;
+            user.IsCompany = registerDto.IsCompany;
+
+            _context.Users!.Add(user);
+            await _context.SaveChangesAsync();
+
+            return new UserDto
+            {
+                Username = user.Username,
+                Token = _tokenService.CreateToken(user),
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                IsCompany = user.IsCompany
+            };
+        }
+
+        public Task<UserDto> LoginUser(RegisterDto registerDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> UserExist(string username)
+        {
+            var s = await _context.Users.Where(x => x.Username.ToLower() == username.ToLower()).CountAsync();
+            return s > 0; // if user found return true
         }
     }
 }

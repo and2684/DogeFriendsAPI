@@ -19,20 +19,20 @@ namespace DogeFriendsAPI.Endpoints
                 .WithTags("Get commands");
 
             app.MapGet("/user/xml", async (IUserRepository userRepository) =>
-                Results.Extensions.Xml(await userRepository.GetAllUsersAsync()))
+                Results.Extensions.ConvertToXml(await userRepository.GetAllUsersAsync()))
                 .Produces<User>(StatusCodes.Status200OK)
                 .WithName("Get all users as xml")
                 .WithTags("Get commands");                
 
             app.MapGet("/user/{id}", async (IUserRepository userRepository, int id) =>
-                await userRepository.GetUserAsync(id) is User user ? Results.Ok(user) : Results.NotFound("User not found."))
+                await userRepository.GetUserAsync(id) is UserShowDto userShowDto ? Results.Ok(userShowDto) : Results.NotFound("User not found."))
                 .Produces<List<User>>(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status404NotFound)
                 .WithName("Get user by id")
                 .WithTags("Get commands");
 
             app.MapGet("/user/search/username/{username}", async (IUserRepository userRepository, string username) =>
-                await userRepository.GetUsersAsync(username) is List<User> userList ? Results.Ok(userList) : Results.NotFound("User not found."))
+                await userRepository.GetUsersAsync(username) is List<UserShowDto> userList ? Results.Ok(userList) : Results.NotFound("User not found."))
                 .Produces<List<User>>(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status404NotFound)
                 .WithName("Get user by username")
@@ -70,6 +70,14 @@ namespace DogeFriendsAPI.Endpoints
                 .Produces(StatusCodes.Status404NotFound)
                 .WithName("Delete user")
                 .WithTags("Delete commands");
+
+            app.MapPost("user/register", async (IUserRepository userRepository, [FromBody] RegisterDto registerDto) =>
+                await userRepository.UserExist(registerDto.Username) ? Results.BadRequest("Username taken") :
+                (await userRepository.RegisterUser(registerDto) is UserDto registeredUser ? Results.Ok("Registration successful") : Results.BadRequest("Registration failed")))
+                .Produces<Boolean>(StatusCodes.Status200OK)
+                .Produces(StatusCodes.Status404NotFound)
+                .WithName("Register user")
+                .WithTags("Accounting commands");                
 
             return app;
         }
