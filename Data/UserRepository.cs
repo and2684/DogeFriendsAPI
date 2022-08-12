@@ -83,8 +83,6 @@ namespace DogeFriendsAPI.Data
 
         public async Task<UserDto> RegisterUser(RegisterDto registerDto)
         {
-            // var user = _mapper.Map<User>(registerDto);
-
             using var hmac = new HMACSHA512();
 
             var user = new User();
