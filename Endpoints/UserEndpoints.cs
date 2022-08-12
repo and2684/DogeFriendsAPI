@@ -75,7 +75,7 @@ namespace DogeFriendsAPI.Endpoints
                 await userRepository.UserExist(registerDto.Username) ? Results.BadRequest("Username taken") :
                 (await userRepository.RegisterUser(registerDto) is UserDto registeredUser ? Results.Ok(registeredUser) : Results.BadRequest("Registration failed")))
                 .Produces<UserDto>(StatusCodes.Status200OK)
-                .Produces(StatusCodes.Status404NotFound)
+                .Produces(StatusCodes.Status400BadRequest)
                 .WithName("Register user")
                 .WithTags("Accounting commands");
 
@@ -96,6 +96,7 @@ namespace DogeFriendsAPI.Endpoints
                 })
                 .Produces<UserDto>(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status404NotFound)
+                .Produces(StatusCodes.Status400BadRequest)
                 .WithName("Login as user")
                 .WithTags("Accounting commands");
 
