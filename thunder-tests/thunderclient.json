@@ -144,7 +144,7 @@
     "method": "GET",
     "sortNum": 110000,
     "created": "2022-08-11T05:27:05.571Z",
-    "modified": "2022-08-12T04:02:41.089Z",
+    "modified": "2022-08-12T04:40:27.298Z",
     "headers": [
       {
         "name": "Accept",
@@ -158,7 +158,27 @@
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\r\n  \"username\": \"Alex02\",\r\n  \"password\": \"pwd111\",\r\n  \"firstName\": \"Alex\",\r\n  \"lastName\": \"Hirsch\",\r\n  \"isCompany\": false\r\n}",
+      "raw": "{\n  \"username\": \"Alex02\",\n  \"password\": \"pwd111\",\n  \"firstName\": \"Alex\",\n  \"lastName\": \"Hirsch\",\n  \"isCompany\": false\n}",
+      "form": []
+    },
+    "tests": [],
+    "docs": "Почему-то не работает из thunder client.\nИз постмана и сваггера работает нормально.\nРазобраться как будет время."
+  },
+  {
+    "_id": "1891ba15-0592-468e-bf95-22ae1d414c07",
+    "colId": "fb8d5a30-03c5-4bdc-b6d0-1d715031f03d",
+    "containerId": "ae0813f3-158c-42b8-ad9f-f4d009331c95",
+    "name": "Login as user",
+    "url": "https://localhost:5001/user/login",
+    "method": "GET",
+    "sortNum": 120000,
+    "created": "2022-08-12T07:00:10.866Z",
+    "modified": "2022-08-12T07:00:29.341Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\r\n  \"username\": \"Alex023\",\r\n  \"password\": \"pwd111\"\r\n}",
       "form": []
     },
     "tests": []

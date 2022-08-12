@@ -18,7 +18,7 @@ namespace API.Helpers
                 .ForMember(dest => dest.IsCompany, opt => opt.MapFrom(src => src.IsCompany))
                 .ForMember(dest => dest.ProfilePhoto, opt => opt.MapFrom(src => src.ProfilePhoto));
 
-            // Не вышло, маппер не видит hmac
+            // Не вышло, маппер не видит hmac. К тому же, логика в маппере - это неправильно.
             // using var hmac = new HMACSHA512();
             // CreateMap<RegisterDto, User>()
             //     .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username.ToLower()))

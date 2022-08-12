@@ -20,7 +20,7 @@ namespace DogeFriendsAPI.Data
         public async Task<List<UserShowDto>> GetAllUsersAsync()
         {
             var users = await _context.Users.ToListAsync();
-            return _mapper.Map<List<User>, List<UserShowDto>>(users);;
+            return _mapper.Map<List<User>, List<UserShowDto>>(users); ;
         }
 
         public async Task<UserShowDto?> GetUserAsync(int id)
@@ -32,7 +32,7 @@ namespace DogeFriendsAPI.Data
         public async Task<List<UserShowDto>> GetUsersAsync(string username)
         {
             var users = await _context.Users.Where(x => x.Username.ToLower().Contains(username.ToLower())).ToListAsync();
-            return _mapper.Map<List<User>, List<UserShowDto>>(users);;            
+            return _mapper.Map<List<User>, List<UserShowDto>>(users); ;
         }
 
         public async Task<List<PersonDto>> GetPersonsAsync(string fullname)
@@ -110,9 +110,18 @@ namespace DogeFriendsAPI.Data
             };
         }
 
-        public Task<UserDto> LoginUser(RegisterDto registerDto)
+        public async Task<UserDto> LoginUser(LoginDto loginDto)
         {
-            throw new NotImplementedException();
+            var user = await _context.Users.Where(x => x.Username == loginDto.Username.ToLower()).SingleOrDefaultAsync();
+
+            return new UserDto
+            {
+                Username = user!.Username,
+                Token = _tokenService.CreateToken(user),
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                IsCompany = user.IsCompany
+            };
         }
 
         public async Task<bool> UserExist(string username)
@@ -120,5 +129,20 @@ namespace DogeFriendsAPI.Data
             var s = await _context.Users.Where(x => x.Username.ToLower() == username.ToLower()).CountAsync();
             return s > 0; // if user found return true
         }
+
+        public async Task<bool> PasswordCorrect(LoginDto loginDto)
+        {
+            var user = await _context.Users.Where(x => x.Username == loginDto.Username.ToLower()).SingleOrDefaultAsync();
+
+            using var hmac = new HMACSHA512(user!.PasswordSalt!);
+
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+            for (int i = 0; i < computedHash.Length; i++)
+            {
+                if (computedHash[i] != user!.PasswordHash![i]) return false;
+            }
+
+            return true;
+        }        
     }
 }

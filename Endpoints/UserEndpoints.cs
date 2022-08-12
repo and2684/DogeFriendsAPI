@@ -22,7 +22,7 @@ namespace DogeFriendsAPI.Endpoints
                 Results.Extensions.ConvertToXml(await userRepository.GetAllUsersAsync()))
                 .Produces<User>(StatusCodes.Status200OK)
                 .WithName("Get all users as xml")
-                .WithTags("Get commands");                
+                .WithTags("Get commands");
 
             app.MapGet("/user/{id}", async (IUserRepository userRepository, int id) =>
                 await userRepository.GetUserAsync(id) is UserShowDto userShowDto ? Results.Ok(userShowDto) : Results.NotFound("User not found."))
@@ -37,7 +37,7 @@ namespace DogeFriendsAPI.Endpoints
                 .Produces(StatusCodes.Status404NotFound)
                 .WithName("Get user by username")
                 .WithTags("Get commands");
-//                .ExcludeFromDescription(); // This method makes endpoint invisible for swagger but still usable!
+            //                .ExcludeFromDescription(); // This method makes endpoint invisible for swagger but still usable!
 
             app.MapGet("/person/search/{fullname}", async (IUserRepository userRepository, string fullname) =>
                 await userRepository.GetPersonsAsync(fullname) is List<PersonDto> userList ? Results.Ok(userList) : Results.NotFound("Person not found."))
@@ -73,11 +73,31 @@ namespace DogeFriendsAPI.Endpoints
 
             app.MapPost("user/register", async (IUserRepository userRepository, [FromBody] RegisterDto registerDto) =>
                 await userRepository.UserExist(registerDto.Username) ? Results.BadRequest("Username taken") :
-                (await userRepository.RegisterUser(registerDto) is UserDto registeredUser ? Results.Ok("Registration successful") : Results.BadRequest("Registration failed")))
-                .Produces<Boolean>(StatusCodes.Status200OK)
+                (await userRepository.RegisterUser(registerDto) is UserDto registeredUser ? Results.Ok(registeredUser) : Results.BadRequest("Registration failed")))
+                .Produces<UserDto>(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status404NotFound)
                 .WithName("Register user")
-                .WithTags("Accounting commands");                
+                .WithTags("Accounting commands");
+
+            // Тут какая-то хрень получилась. Нужно разобраться, как из репо возвращать правильно ошибки. 
+            // Временное решение - вытащить каждую проверку в отдельный метод. Но это раздувает наш эндпоинт. Думаю...
+            app.MapPost("user/login", async (IUserRepository userRepository, [FromBody] LoginDto loginDto) =>
+                {
+                    if (!(await userRepository.UserExist(loginDto.Username)))
+                        return Results.NotFound("User not found");
+
+                    if (!(await userRepository.PasswordCorrect(loginDto)))
+                        return Results.BadRequest("Incorrect password");
+
+                    if (await userRepository.LoginUser(loginDto) is UserDto loggedUser)
+                        return Results.Ok(loggedUser);
+
+                    return Results.BadRequest("Login failed");
+                })
+                .Produces<UserDto>(StatusCodes.Status200OK)
+                .Produces(StatusCodes.Status404NotFound)
+                .WithName("Login as user")
+                .WithTags("Accounting commands");
 
             return app;
         }
