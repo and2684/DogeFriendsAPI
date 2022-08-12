@@ -126,13 +126,12 @@ namespace DogeFriendsAPI.Data
 
         public async Task<bool> UserExist(string username)
         {
-            var s = await _context.Users.Where(x => x.Username.ToLower() == username.ToLower()).CountAsync();
-            return s > 0; // if user found return true
+            return await _context.Users.Where(x => x.Username.ToLower() == username.ToLower()).AnyAsync();; // if user found return true
         }
 
         public async Task<bool> PasswordCorrect(LoginDto loginDto)
         {
-            var user = await _context.Users.Where(x => x.Username == loginDto.Username.ToLower()).SingleOrDefaultAsync();
+            var user = await _context.Users.Where(x => x.Username == loginDto.Username.ToLower()).FirstOrDefaultAsync();
 
             using var hmac = new HMACSHA512(user!.PasswordSalt!);
 
