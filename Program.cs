@@ -44,7 +44,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-var scopeRequiredByApi = app.Configuration["AzureAd:Scopes"];
+//var scopeRequiredByApi = app.Configuration["AzureAd:Scopes"];
 
 app.UseMiddleware<ExceptionMiddleware>();
 

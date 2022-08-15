@@ -1,0 +1,1141 @@
+{
+	"info": {
+		"_postman_id": "2ebf899c-21ef-4fd4-be9b-d0a7d35518eb",
+		"name": "DogeFriendsAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "Delete user",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "-22064341",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/user/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"user",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "-22064341",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "true"
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/user/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"user",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "-22064341",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Get user by id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/user/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "-22064341",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/user/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"user",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "-22064341",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"id\": -76535885,\n    \"username\": \"qui sint dolor\",\n    \"passwordHash\": \"in eu\",\n    \"passwordSalt\": \"laboris aliquip occaecat ad\",\n    \"firstName\": \"dolore\",\n    \"lastName\": \"ullamco eu ve\",\n    \"isCompany\": false,\n    \"profilePhoto\": \"deserunt consectetur aute labore incididunt\"\n  },\n  {\n    \"id\": -52766048,\n    \"username\": \"ad mollit dolor consectetur\",\n    \"passwordHash\": \"Excepteur deserunt\",\n    \"passwordSalt\": \"laboris eiusmod sed nisi\",\n    \"firstName\": \"nu\",\n    \"lastName\": \"officia quis ut labore incididunt\",\n    \"isCompany\": false,\n    \"profilePhoto\": \"eiusmod nisi\"\n  }\n]"
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/user/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"user",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "-22064341",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 89341259,\n  \"username\": \"ea in\",\n  \"passwordHash\": \"cil\",\n  \"passwordSalt\": \"\",\n  \"firstName\": \"est sed eu ex reprehenderit\",\n  \"lastName\": \"magna\",\n  \"isCompany\": false,\n  \"profilePhoto\": \"dolor Lorem sit dolor\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 89341259,\n  \"username\": \"ea in\",\n  \"passwordHash\": \"cil\",\n  \"passwordSalt\": \"\",\n  \"firstName\": \"est sed eu ex reprehenderit\",\n  \"lastName\": \"magna\",\n  \"isCompany\": false,\n  \"profilePhoto\": \"dolor Lorem sit dolor\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": 89341259,\n  \"username\": \"ea in\",\n  \"passwordHash\": \"cil\",\n  \"passwordSalt\": \"\",\n  \"firstName\": \"est sed eu ex reprehenderit\",\n  \"lastName\": \"magna\",\n  \"isCompany\": false,\n  \"profilePhoto\": \"dolor Lorem sit dolor\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": 89341259,\n  \"username\": \"ea in\",\n  \"passwordHash\": \"cil\",\n  \"passwordSalt\": \"\",\n  \"firstName\": \"est sed eu ex reprehenderit\",\n  \"lastName\": \"magna\",\n  \"isCompany\": false,\n  \"profilePhoto\": \"dolor Lorem sit dolor\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 89341259,\n  \"username\": \"ea in\",\n  \"passwordHash\": \"cil\",\n  \"passwordSalt\": \"\",\n  \"firstName\": \"est sed eu ex reprehenderit\",\n  \"lastName\": \"magna\",\n  \"isCompany\": false,\n  \"profilePhoto\": \"dolor Lorem sit dolor\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 89341259,\n  \"username\": \"ea in\",\n  \"passwordHash\": \"cil\",\n  \"passwordSalt\": \"\",\n  \"firstName\": \"est sed eu ex reprehenderit\",\n  \"lastName\": \"magna\",\n  \"isCompany\": false,\n  \"profilePhoto\": \"dolor Lorem sit dolor\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": 89341259,\n  \"username\": \"ea in\",\n  \"passwordHash\": \"cil\",\n  \"passwordSalt\": \"\",\n  \"firstName\": \"est sed eu ex reprehenderit\",\n  \"lastName\": \"magna\",\n  \"isCompany\": false,\n  \"profilePhoto\": \"dolor Lorem sit dolor\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": 89341259,\n  \"username\": \"ea in\",\n  \"passwordHash\": \"cil\",\n  \"passwordSalt\": \"\",\n  \"firstName\": \"est sed eu ex reprehenderit\",\n  \"lastName\": \"magna\",\n  \"isCompany\": false,\n  \"profilePhoto\": \"dolor Lorem sit dolor\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Register user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"Alex023\",\n  \"password\": \"pwd111\",\n  \"firstName\": \"Alex\",\n  \"lastName\": \"Hirsch\",\n  \"isCompany\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"password\": \"in laboris velit nulla\",\n  \"username\": \"elit fugiat\",\n  \"firstName\": \"ut esse exercitation\",\n  \"lastName\": \"incididunt consequat dolore ex\",\n  \"isCompany\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"password\": \"in laboris velit nulla\",\n  \"username\": \"elit fugiat\",\n  \"firstName\": \"ut esse exercitation\",\n  \"lastName\": \"incididunt consequat dolore ex\",\n  \"isCompany\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Login as user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"var bodyToken = responseJson.token;\r",
+									"pm.environment.set(\"token\", bodyToken)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"Alex023\",\n  \"password\": \"pwd111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"password\": \"in laboris velit nulla\",\n  \"username\": \"elit fugiat\",\n  \"firstName\": \"ut esse exercitation\",\n  \"lastName\": \"incididunt consequat dolore ex\",\n  \"isCompany\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "true"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"password\": \"in laboris velit nulla\",\n  \"username\": \"elit fugiat\",\n  \"firstName\": \"ut esse exercitation\",\n  \"lastName\": \"incididunt consequat dolore ex\",\n  \"isCompany\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Login as user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"Alex023\",\n  \"password\": \"pwd111\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 15 Aug 2022 09:31:46 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"username\": \"alex023\",\n    \"token\": \"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhbGV4MDIzIiwibmJmIjoxNjYwNTU1OTA2LCJleHAiOjE2NjExNjA3MDYsImlhdCI6MTY2MDU1NTkwNn0.LgMP7ohVl-Yv3PTlWpNQSwI_HVA53HTPuJYczAegZOa07gTi3DQqYF78ztKQg5zkZkBNB5T0iIaLk3-zUxlXOQ\",\n    \"firstName\": \"Alex\",\n    \"lastName\": \"Hirsch\",\n    \"isCompany\": false,\n    \"profilePhoto\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all users as xml",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user/xml",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"xml"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user/xml",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"xml"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": 89341259,\n  \"username\": \"ea in\",\n  \"passwordHash\": \"cil\",\n  \"passwordSalt\": \"\",\n  \"firstName\": \"est sed eu ex reprehenderit\",\n  \"lastName\": \"magna\",\n  \"isCompany\": false,\n  \"profilePhoto\": \"dolor Lorem sit dolor\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get user by username",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user/search/username/:username",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"search",
+								"username",
+								":username"
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "cillum",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user/search/username/:username",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"search",
+										"username",
+										":username"
+									],
+									"variable": [
+										{
+											"key": "username",
+											"value": "cillum",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": -76535885,\n    \"username\": \"qui sint dolor\",\n    \"passwordHash\": \"in eu\",\n    \"passwordSalt\": \"laboris aliquip occaecat ad\",\n    \"firstName\": \"dolore\",\n    \"lastName\": \"ullamco eu ve\",\n    \"isCompany\": false,\n    \"profilePhoto\": \"deserunt consectetur aute labore incididunt\"\n  },\n  {\n    \"id\": -52766048,\n    \"username\": \"ad mollit dolor consectetur\",\n    \"passwordHash\": \"Excepteur deserunt\",\n    \"passwordSalt\": \"laboris eiusmod sed nisi\",\n    \"firstName\": \"nu\",\n    \"lastName\": \"officia quis ut labore incididunt\",\n    \"isCompany\": false,\n    \"profilePhoto\": \"eiusmod nisi\"\n  }\n]"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user/search/username/:username",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"search",
+										"username",
+										":username"
+									],
+									"variable": [
+										{
+											"key": "username",
+											"value": "cillum",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Get person",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/person/search/:fullname",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"person",
+						"search",
+						":fullname"
+					],
+					"variable": [
+						{
+							"key": "fullname",
+							"value": "cillum",
+							"description": "(Required) "
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/person/search/:fullname",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"person",
+								"search",
+								":fullname"
+							],
+							"variable": [
+								{
+									"key": "fullname",
+									"value": "cillum",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n  {\n    \"id\": -76535885,\n    \"username\": \"qui sint dolor\",\n    \"passwordHash\": \"in eu\",\n    \"passwordSalt\": \"laboris aliquip occaecat ad\",\n    \"firstName\": \"dolore\",\n    \"lastName\": \"ullamco eu ve\",\n    \"isCompany\": false,\n    \"profilePhoto\": \"deserunt consectetur aute labore incididunt\"\n  },\n  {\n    \"id\": -52766048,\n    \"username\": \"ad mollit dolor consectetur\",\n    \"passwordHash\": \"Excepteur deserunt\",\n    \"passwordSalt\": \"laboris eiusmod sed nisi\",\n    \"firstName\": \"nu\",\n    \"lastName\": \"officia quis ut labore incididunt\",\n    \"isCompany\": false,\n    \"profilePhoto\": \"eiusmod nisi\"\n  }\n]"
+				},
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/person/search/:fullname",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"person",
+								"search",
+								":fullname"
+							],
+							"variable": [
+								{
+									"key": "fullname",
+									"value": "cillum",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Exception test endpoint",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/test/exception",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"test",
+						"exception"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Server Error",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/test/exception",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"test",
+								"exception"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Welcome",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": "cillum"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://localhost:5001",
+			"type": "string"
+		}
+	]
+}

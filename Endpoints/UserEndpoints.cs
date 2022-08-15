@@ -1,5 +1,6 @@
 ﻿using DogeFriendsAPI.Dto;
 using DogeFriendsAPI.XmlSerialization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DogeFriendsAPI.Endpoints
 {
@@ -7,7 +8,7 @@ namespace DogeFriendsAPI.Endpoints
     {
         public static WebApplication SetUserEndpoints(this WebApplication app)
         {
-            app.MapGet("/", () => "Welcome to DogeFriends :)")
+            app.MapGet("/", [Authorize] () => "Welcome to DogeFriends :)") 
                 .Produces(StatusCodes.Status200OK)
                 .WithName("Welcome")
                 .WithTags("Welcome group");
