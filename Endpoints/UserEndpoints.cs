@@ -10,6 +10,7 @@ namespace DogeFriendsAPI.Endpoints
         {
             app.MapGet("/", [Authorize] () => "Welcome to DogeFriends :)") 
                 .Produces(StatusCodes.Status200OK)
+                .Produces(StatusCodes.Status401Unauthorized)
                 .WithName("Welcome")
                 .WithTags("Welcome group");
 

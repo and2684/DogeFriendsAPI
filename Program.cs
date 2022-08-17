@@ -1,8 +1,8 @@
 using API.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Identity.Web;
 using API.Middleware;
 using API.Services;
+using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +29,8 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(build
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<ITokenService, TokenService>();
 builder.Services.AddAutoMapper(typeof(AutomapperProfiles).Assembly);
+
+var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 
 var app = builder.Build();
 
