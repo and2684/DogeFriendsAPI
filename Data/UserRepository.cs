@@ -9,17 +9,20 @@ namespace DogeFriendsAPI.Data
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly ITokenService _tokenService;
+        private readonly ILoggerManager _logger;
 
-        public UserRepository(DataContext context, IMapper mapper, ITokenService tokenService)
+        public UserRepository(DataContext context, IMapper mapper, ITokenService tokenService, ILoggerManager logger)
         {
             _context = context;
             _mapper = mapper;
             _tokenService = tokenService;
+            _logger = logger;
         }
 
         public async Task<List<UserShowDto>> GetAllUsersAsync()
         {
             var users = await _context.Users.ToListAsync();
+            _logger.LogInfo($"Показываем пользователей. В списке {users.Count()} пользователей.");
             return _mapper.Map<List<User>, List<UserShowDto>>(users); ;
         }
 
