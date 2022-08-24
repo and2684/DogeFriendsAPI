@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using DogeFriendsAPI.Dto;
 using DogeFriendsAPI.XmlSerialization;
+using Extensions;
 using Microsoft.AspNetCore.Authorization;
 
 namespace DogeFriendsAPI.Endpoints
@@ -9,9 +10,9 @@ namespace DogeFriendsAPI.Endpoints
     {
         public static WebApplication SetUserEndpoints(this WebApplication app)
         {
-            app.MapGet("/", [Authorize(Roles = "Administrator")] () =>
-            {                
-                return $"Welcome to DogeFriends, username :)";
+            app.MapGet("/", [Authorize] (ClaimsPrincipal user) =>
+            {           
+                return $"Welcome to DogeFriends, my dearest {user.GetLoggedUserRole()} {user.GetLoggedUsername()} :)";
             })
                 .Produces(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status401Unauthorized)
@@ -70,7 +71,7 @@ namespace DogeFriendsAPI.Endpoints
                 .WithName("Update user")
                 .WithTags("Update commands");
 
-            app.MapDelete("/user/{id}", async (IUserRepository userRepository, int id) =>
+            app.MapDelete("/user/{id}", [Authorize(Roles = "Administrator")] async (IUserRepository userRepository, int id) =>
                 await userRepository.DeleteUserAsync(id) ? Results.Ok("User was deleted.") : Results.NotFound("Nothing to delete"))
                 .Produces<Boolean>(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status404NotFound)

@@ -4,6 +4,7 @@ using API.Middleware;
 using API.Services;
 using NLog;
 using Microsoft.OpenApi.Models;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,9 +30,9 @@ var securityScheme = new OpenApiSecurityScheme()
 {
     Name = "Authorization",
     Type = SecuritySchemeType.Http,
-    Scheme = "Bearer",
+    Scheme = "bearer",
     BearerFormat = "JWT",
-    In = ParameterLocation.Query,
+    In = ParameterLocation.Header,
     Description = "JSON Web Token based security",
 };
 

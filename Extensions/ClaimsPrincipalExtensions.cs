@@ -7,12 +7,18 @@ namespace Extensions
     {
         public static string GetLoggedUsername(this ClaimsPrincipal user)
         {
-            return user.FindFirst(ClaimTypes.Name)?.Value!;
+            return user.FindFirst(JwtRegisteredClaimNames.Name)?.Value!;
         }
 
         public static int GetLoggedUserId(this ClaimsPrincipal user)
         {
             return int.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value!);
-        }    
+        }         
+
+        public static string GetLoggedUserRole(this ClaimsPrincipal user)
+        {
+            return user.FindFirst(ClaimTypes.Role)?.Value!;
+        }
+
     }
 }

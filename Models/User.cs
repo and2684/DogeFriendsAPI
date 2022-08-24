@@ -1,4 +1,6 @@
-﻿namespace DogeFriendsAPI.Data
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace DogeFriendsAPI.Data
 {
     [Index(nameof(Username), IsUnique = true)]
     public class User
