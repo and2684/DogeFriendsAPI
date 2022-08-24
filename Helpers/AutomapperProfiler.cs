@@ -10,12 +10,6 @@ namespace API.Helpers
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}".Trim())); // Собираем полное имя (Имя Фамилия)
 
             CreateMap<User, UserShowDto>();
-                // .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                // .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username))
-                // .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
-                // .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
-                // .ForMember(dest => dest.IsCompany, opt => opt.MapFrom(src => src.IsCompany))
-                // .ForMember(dest => dest.ProfilePhoto, opt => opt.MapFrom(src => src.ProfilePhoto));
 
             // Не вышло, маппер не видит hmac. К тому же, логика в маппере - это неправильно.
             // using var hmac = new HMACSHA512();

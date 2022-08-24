@@ -2,8 +2,8 @@ using API.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using API.Middleware;
 using API.Services;
-using NLog.Web;
 using NLog;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,15 +15,55 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-            ValidateIssuer = false,  
-            ValidateAudience = false 
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["Jwt:Audience"]
         };
     });
 builder.Services.AddAuthorization();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+#region Настройки авторизации в Swagger
+var securityScheme = new OpenApiSecurityScheme()
+{
+    Name = "Authorization",
+    Type = SecuritySchemeType.Http,
+    Scheme = "Bearer",
+    BearerFormat = "JWT",
+    In = ParameterLocation.Query,
+    Description = "JSON Web Token based security",
+};
+
+var securityReq = new OpenApiSecurityRequirement()
+{
+    {
+        new OpenApiSecurityScheme
+        {
+            Reference = new OpenApiReference
+            {
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+            }
+        },
+        new string[] {}
+    }
+};
+
+var info = new OpenApiInfo()
+{
+    Version = "v1",
+    Title = "DogeFriendsAPI"
+};
+#endregion
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(o =>
+{
+    o.SwaggerDoc("v1", info);
+    o.AddSecurityDefinition("Bearer", securityScheme);
+    o.AddSecurityRequirement(securityReq);
+});
 
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 

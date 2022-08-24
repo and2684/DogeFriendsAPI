@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Security.Cryptography;
 using AutoMapper.QueryableExtensions;
 using DogeFriendsAPI.Dto;
@@ -129,7 +130,6 @@ namespace DogeFriendsAPI.Data
         {
             return await _context.Users.Where(x => x.Username.ToLower() == username.ToLower()).AnyAsync();; // if user found return true
         }
-
         public async Task<bool> PasswordCorrect(LoginDto loginDto)
         {
             var user = await _context.Users.Where(x => x.Username == loginDto.Username.ToLower()).FirstOrDefaultAsync();

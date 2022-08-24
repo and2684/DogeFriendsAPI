@@ -1,6 +1,6 @@
 ﻿namespace DogeFriendsAPI.Data
 {
-    [Index(nameof(Username), IsUnique = true)]    
+    [Index(nameof(Username), IsUnique = true)]
     public class User
     {
         public int Id { get; set; }

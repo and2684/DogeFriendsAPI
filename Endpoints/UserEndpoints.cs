@@ -1,4 +1,5 @@
-﻿using DogeFriendsAPI.Dto;
+﻿using System.Security.Claims;
+using DogeFriendsAPI.Dto;
 using DogeFriendsAPI.XmlSerialization;
 using Microsoft.AspNetCore.Authorization;
 
@@ -8,7 +9,10 @@ namespace DogeFriendsAPI.Endpoints
     {
         public static WebApplication SetUserEndpoints(this WebApplication app)
         {
-            app.MapGet("/", [Authorize] () => "Welcome to DogeFriends :)") 
+            app.MapGet("/", [Authorize(Roles = "Administrator")] () =>
+            {                
+                return $"Welcome to DogeFriends, username :)";
+            })
                 .Produces(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status401Unauthorized)
                 .WithName("Welcome")
