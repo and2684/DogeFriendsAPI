@@ -7,6 +7,7 @@ global using AutoMapper;
 global using DogeFriendsAPI.Endpoints;
 global using DogeFriendsAPI.Data;
 global using DogeFriendsAPI.Interfaces;
+global using DogeFriendsAPI.Models;
 
 global using Microsoft.IdentityModel.Tokens;
 global using System.Text;

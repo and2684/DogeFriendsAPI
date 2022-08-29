@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace DogeFriendsAPI.Data
+﻿namespace DogeFriendsAPI.Models
 {
     [Index(nameof(Username), IsUnique = true)]
     public class User
@@ -14,5 +12,8 @@ namespace DogeFriendsAPI.Data
         public string LastName { get; set; } = string.Empty;
         public bool IsCompany { get; set; }
         public byte[]? ProfilePhoto { get; set; }
+        public List<UserRole> Roles { get; set; } = new List<UserRole>();
+        public List<Dog> Dogs { get; set; } = new List<Dog>();
+        public List<DogPhotoLike> DogPhotoLikes { get; set; } = new List<DogPhotoLike>();
     }
 }

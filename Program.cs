@@ -4,7 +4,6 @@ using API.Middleware;
 using API.Services;
 using NLog;
 using Microsoft.OpenApi.Models;
-using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +23,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 
+builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddSingleton<ITokenService, TokenService>();
+builder.Services.AddAutoMapper(typeof(AutomapperProfiles).Assembly);
+
+// Add Nlog
+LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
+builder.Services.AddSingleton<ILoggerManager, LoggerManager>();
 
 #region Настройки авторизации в Swagger
 var securityScheme = new OpenApiSecurityScheme()
@@ -56,7 +64,6 @@ var info = new OpenApiInfo()
     Version = "v1",
     Title = "DogeFriendsAPI"
 };
-#endregion
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(o =>
@@ -65,16 +72,7 @@ builder.Services.AddSwaggerGen(o =>
     o.AddSecurityDefinition("Bearer", securityScheme);
     o.AddSecurityRequirement(securityReq);
 });
-
-builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddSingleton<ITokenService, TokenService>();
-builder.Services.AddAutoMapper(typeof(AutomapperProfiles).Assembly);
-
-// Add Nlog
-LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
-builder.Services.AddSingleton<ILoggerManager, LoggerManager>();
+#endregion
 
 var app = builder.Build();
 
