@@ -24,7 +24,7 @@ namespace DogeFriendsAPI.Data
         {
             var users = await _context.Users.ToListAsync();
             _logger.LogInfo($"Показываем пользователей. В списке {users.Count()} пользователей.");
-            return _mapper.Map<List<User>, List<UserShowDto>>(users); ;
+            return _mapper.Map<List<User>, List<UserShowDto>>(users);
         }
 
         public async Task<UserShowDto?> GetUserAsync(int id)
