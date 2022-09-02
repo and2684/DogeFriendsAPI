@@ -1,9 +1,9 @@
 using API.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using API.Middleware;
-using API.Services;
 using NLog;
 using Microsoft.OpenApi.Models;
+using DogeFriendsAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +27,7 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(build
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<ITokenService, TokenService>();
+builder.Services.AddScoped<ITranslateService, MicrosoftTranslateService>();
 builder.Services.AddAutoMapper(typeof(AutomapperProfiles).Assembly);
 
 // Add Nlog

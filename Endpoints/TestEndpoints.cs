@@ -17,7 +17,7 @@ namespace DogeFriendsAPI.Endpoints
             .WithName("Exception test endpoint")
             .WithTags("Test endpoints");
 
-            app.MapGet("/test/seedbreed", [Authorize(Roles = "Administrator")] async (DataContext context, IMapper mapper) =>
+            app.MapGet("/test/seedbreed", [Authorize(Roles = "Administrator")] async (DataContext context, IMapper mapper, ITranslateService translateService) =>
             {
                 if (await context.Breeds!.AnyAsync()) return Results.BadRequest("We already have breeds, you dont need to seed them.");
 
@@ -31,6 +31,7 @@ namespace DogeFriendsAPI.Endpoints
                         var breedDb = new Breed
                         {
                             BreedName = breed.Name.Trim(),
+                            BreedNameRu = translateService.Translate(breed.Name.Trim()).Result,
                             BreedPhoto = await httpClient.GetByteArrayAsync(breed.Url),
                             BreedPhotoFileName = breed.Url.Split('/').LastOrDefault()!
                         };
@@ -47,6 +48,11 @@ namespace DogeFriendsAPI.Endpoints
             app.MapGet("/test/breed", [Authorize(Roles = "Administrator")] async (DataContext context) =>
             {
                 return Results.Ok(await context.Breeds.ToListAsync());
+            });
+
+            app.MapGet("/test/translate", [Authorize(Roles = "Administrator")] async (ITranslateService translateService) =>
+            {
+                return Results.Ok(await translateService.Translate("Hello world"));
             });
 
             return app;

@@ -1,7 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace API.Services
+namespace DogeFriendsAPI.Services
 {
     public class TokenService : ITokenService
     {
