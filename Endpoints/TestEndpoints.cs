@@ -50,9 +50,9 @@ namespace DogeFriendsAPI.Endpoints
                 return Results.Ok(await context.Breeds.ToListAsync());
             });
 
-            app.MapGet("/test/translate", [Authorize(Roles = "Administrator")] async (ITranslateService translateService) =>
+            app.MapGet("/test/translate", [Authorize(Roles = "Administrator")] async (ITranslateService translateService, [FromQuery] string input) =>
             {
-                return Results.Ok(await translateService.Translate("Hello world"));
+                return Results.Ok(await translateService.Translate(input));
             });
 
             return app;
