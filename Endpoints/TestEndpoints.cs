@@ -43,17 +43,23 @@ namespace DogeFriendsAPI.Endpoints
                 await context.SaveChangesAsync();
 
                 return Results.Ok($"Breeds successfull seeded. {breeds.Count()} positions added.");
-            });
+            })
+            .WithName("Seed breeds")
+            .WithTags("Test endpoints");
 
             app.MapGet("/test/breed", [Authorize(Roles = "Administrator")] async (DataContext context) =>
             {
                 return Results.Ok(await context.Breeds.ToListAsync());
-            });
+            })            
+            .WithName("Get all breeds")
+            .WithTags("Test endpoints");
 
             app.MapGet("/test/translate", [Authorize(Roles = "Administrator")] async (ITranslateService translateService, [FromQuery] string input) =>
             {
                 return Results.Ok(await translateService.Translate(input));
-            });
+            })
+            .WithName("Translate text")
+            .WithTags("Test endpoints");
 
             return app;
         }
