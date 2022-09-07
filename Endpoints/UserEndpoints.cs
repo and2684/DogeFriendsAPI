@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Security.Claims;
 using DogeFriendsAPI.Dto;
 using DogeFriendsAPI.XmlSerialization;
 using Extensions;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DogeFriendsAPI.Endpoints
 {
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public static class UserEndpoints
     {
         public static WebApplication SetUserEndpoints(this WebApplication app)
@@ -21,26 +23,26 @@ namespace DogeFriendsAPI.Endpoints
 
             app.MapGet("/user", async (IUserRepository userRepository) =>
                 Results.Ok(await userRepository.GetAllUsersAsync()))
-                .Produces<User>(StatusCodes.Status200OK)
+                .Produces<User>()
                 .WithName("Get all users")
                 .WithTags("Get commands");
 
             app.MapGet("/user/xml", async (IUserRepository userRepository) =>
                 Results.Extensions.ConvertToXml(await userRepository.GetAllUsersAsync()))
-                .Produces<User>(StatusCodes.Status200OK)
+                .Produces<User>()
                 .WithName("Get all users as xml")
                 .WithTags("Get commands");
 
             app.MapGet("/user/{id}", async (IUserRepository userRepository, int id) =>
                 await userRepository.GetUserAsync(id) is UserShowDto userShowDto ? Results.Ok(userShowDto) : Results.NotFound("User not found."))
-                .Produces<List<User>>(StatusCodes.Status200OK)
+                .Produces<List<User>>()
                 .Produces(StatusCodes.Status404NotFound)
                 .WithName("Get user by id")
                 .WithTags("Get commands");
 
             app.MapGet("/user/search/username/{username}", async (IUserRepository userRepository, string username) =>
                 await userRepository.GetUsersAsync(username) is List<UserShowDto> userList ? Results.Ok(userList) : Results.NotFound("User not found."))
-                .Produces<List<User>>(StatusCodes.Status200OK)
+                .Produces<List<User>>()
                 .Produces(StatusCodes.Status404NotFound)
                 .WithName("Get user by username")
                 .WithTags("Get commands");
@@ -48,7 +50,7 @@ namespace DogeFriendsAPI.Endpoints
 
             app.MapGet("/person/search/{fullname}", async (IUserRepository userRepository, string fullname) =>
                 await userRepository.GetPersonsAsync(fullname) is List<PersonDto> userList ? Results.Ok(userList) : Results.NotFound("Person not found."))
-                .Produces<List<User>>(StatusCodes.Status200OK)
+                .Produces<List<User>>()
                 .Produces(StatusCodes.Status404NotFound)
                 .WithName("Get person")
                 .WithTags("Get commands");
@@ -66,14 +68,14 @@ namespace DogeFriendsAPI.Endpoints
             app.MapPut("/user", async (IUserRepository userRepository, [FromBody] User user) =>
                 await userRepository.UpdateUserAsync(user) is User updatedUser ? Results.Ok(updatedUser) : Results.NotFound("User cannot be updated."))
                 .Accepts<User>("application/json")
-                .Produces<User>(StatusCodes.Status200OK)
+                .Produces<User>()
                 .Produces(StatusCodes.Status404NotFound)
                 .WithName("Update user")
                 .WithTags("Update commands");
 
             app.MapDelete("/user/{id}", [Authorize(Roles = "Administrator")] async (IUserRepository userRepository, int id) =>
                 await userRepository.DeleteUserAsync(id) ? Results.Ok("User was deleted.") : Results.NotFound("Nothing to delete"))
-                .Produces<Boolean>(StatusCodes.Status200OK)
+                .Produces<Boolean>()
                 .Produces(StatusCodes.Status404NotFound)
                 .WithName("Delete user")
                 .WithTags("Delete commands");
@@ -81,7 +83,7 @@ namespace DogeFriendsAPI.Endpoints
             app.MapPost("user/register", async (IUserRepository userRepository, [FromBody] RegisterDto registerDto) =>
                 await userRepository.UserExist(registerDto.Username) ? Results.BadRequest("Username taken") :
                 (await userRepository.RegisterUser(registerDto) is UserDto registeredUser ? Results.Ok(registeredUser) : Results.BadRequest("Registration failed")))
-                .Produces<UserDto>(StatusCodes.Status200OK)
+                .Produces<UserDto>()
                 .Produces(StatusCodes.Status400BadRequest)
                 .WithName("Register user")
                 .WithTags("Accounting commands");
@@ -101,7 +103,7 @@ namespace DogeFriendsAPI.Endpoints
 
                     return Results.BadRequest("Login failed");
                 })
-                .Produces<UserDto>(StatusCodes.Status200OK)
+                .Produces<UserDto>()
                 .Produces(StatusCodes.Status404NotFound)
                 .Produces(StatusCodes.Status400BadRequest)
                 .WithName("Login as user")
@@ -114,11 +116,11 @@ namespace DogeFriendsAPI.Endpoints
                         return Results.NotFound("User not found");
 
                     if (await userRepository.SetUserRoles(userRoleSetDto))
-                        return Results.Ok("Roles have been setted");
+                        return Results.Ok("Roles have been set");
 
-                    return Results.BadRequest("No roles setted");     
+                    return Results.BadRequest("No roles set");     
                 })
-                .Produces<UserDto>(StatusCodes.Status200OK)
+                .Produces(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status404NotFound)
                 .Produces(StatusCodes.Status400BadRequest)
                 .WithName("Set user roles")

@@ -21,22 +21,25 @@ namespace DogeFriendsAPI.Data
             modelBuilder.Entity<User>()
                 .HasMany(c => c.Roles)
                 .WithMany(s => s.Users)
-                .UsingEntity(t => t.ToTable("UserToRole"));            
+                .UsingEntity(t => t.ToTable("UserToRole"));
 
             modelBuilder.Entity<Dog>()
                 .HasOne(c => c.User)
                 .WithMany(s => s.Dogs)
-                .HasForeignKey(k => k.UserId);
+                .HasForeignKey(k => k.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Breed>()
                 .HasMany(c => c.Dogs)
                 .WithOne(s => s.Breed)
-                .HasForeignKey(k => k.BreedId);
+                .HasForeignKey(k => k.BreedId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<DogPhoto>()
                 .HasOne(c => c.Dog)
                 .WithMany(s => s.Photos)
-                .HasForeignKey(k => k.DogId);
+                .HasForeignKey(k => k.DogId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<DogPhotoLike>()
                 .HasKey(k => new { k.LikedPhotoId, k.SourceUserId });
