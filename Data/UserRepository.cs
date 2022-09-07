@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using System.Security.Cryptography;
 using AutoMapper.QueryableExtensions;
 using DogeFriendsAPI.Dto;
@@ -99,6 +98,8 @@ namespace DogeFriendsAPI.Data
             user.LastName = registerDto.LastName;
             user.IsCompany = registerDto.IsCompany;
 
+            user.Roles = await _context.Roles.Where(x => x.Role.ToLower() == "user").ToListAsync();
+
             _context.Users!.Add(user);
             await _context.SaveChangesAsync();
 
@@ -108,13 +109,16 @@ namespace DogeFriendsAPI.Data
                 Token = _tokenService.CreateToken(user),
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                IsCompany = user.IsCompany
+                IsCompany = user.IsCompany,
+                Roles = user.Roles.Select(x => x.Role).ToList()
             };
         }
 
         public async Task<UserDto> LoginUser(LoginDto loginDto)
         {
-            var user = await _context.Users.Where(x => x.Username == loginDto.Username.ToLower()).FirstOrDefaultAsync();
+            var user = await _context.Users.Where(x => x.Username == loginDto.Username.ToLower())
+                .Include(x => x.Roles)
+                .FirstOrDefaultAsync();
 
             return new UserDto
             {
@@ -122,7 +126,8 @@ namespace DogeFriendsAPI.Data
                 Token = _tokenService.CreateToken(user),
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                IsCompany = user.IsCompany
+                IsCompany = user.IsCompany,
+                Roles = user.Roles?.Select(x => x.Role).ToList()
             };
         }
 
@@ -143,6 +148,26 @@ namespace DogeFriendsAPI.Data
             }
 
             return true;
-        }        
+        }
+
+        public async Task<bool> SetUserRoles(UserRoleSetDto userRoleSetDto)
+        {
+            var user = await _context.Users
+                .Include(x => x.Roles)
+                .Where(x => x.Id == userRoleSetDto.UserId)
+                .FirstOrDefaultAsync();
+
+            user!.Roles!.RemoveAll(x => true); // Чистим список ролей Юзера
+
+            // И заполняем новым списком
+            foreach(var role in userRoleSetDto.UserRoles!)
+            {
+                var userRole = await _context.Roles.FindAsync(role);
+                if (userRole != null)
+                    user!.Roles.Add(userRole);
+            }
+
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

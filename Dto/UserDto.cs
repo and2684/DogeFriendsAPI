@@ -7,6 +7,7 @@ namespace DogeFriendsAPI.Dto
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public bool IsCompany { get; set; }
-        public byte[]? ProfilePhoto { get; set; }        
+        public byte[]? ProfilePhoto { get; set; }
+        public List<string>? Roles { get; set; }
     }
 }

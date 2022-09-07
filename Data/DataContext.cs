@@ -1,4 +1,6 @@
-﻿namespace DogeFriendsAPI.Data
+﻿using DogeFriendsAPI.Extensions;
+
+namespace DogeFriendsAPI.Data
 {
     public class DataContext : DbContext
     {
@@ -19,7 +21,7 @@
             modelBuilder.Entity<User>()
                 .HasMany(c => c.Roles)
                 .WithMany(s => s.Users)
-                .UsingEntity(t => t.ToTable("UserToRole"));
+                .UsingEntity(t => t.ToTable("UserToRole"));            
 
             modelBuilder.Entity<Dog>()
                 .HasOne(c => c.User)
@@ -37,13 +39,15 @@
                 .HasForeignKey(k => k.DogId);
 
             modelBuilder.Entity<DogPhotoLike>()
-                .HasKey(k => new {k.LikedPhotoId, k.SourceUserId});
+                .HasKey(k => new { k.LikedPhotoId, k.SourceUserId });
 
             modelBuilder.Entity<DogPhotoLike>()
                 .HasOne(c => c.SourceUser)
                 .WithMany(s => s.DogPhotoLikes)
                 .HasForeignKey(k => k.SourceUserId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.SeedUserRoles();
         }
     }
 }

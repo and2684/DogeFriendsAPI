@@ -11,7 +11,7 @@ namespace DogeFriendsAPI.Endpoints
         public static WebApplication SetUserEndpoints(this WebApplication app)
         {
             app.MapGet("/", [Authorize] (ClaimsPrincipal user) =>
-            {           
+            {
                 return $"Welcome to DogeFriends, my dearest {user.GetLoggedUserRole()} {user.GetLoggedUsername()} :)";
             })
                 .Produces(StatusCodes.Status200OK)
@@ -106,6 +106,23 @@ namespace DogeFriendsAPI.Endpoints
                 .Produces(StatusCodes.Status400BadRequest)
                 .WithName("Login as user")
                 .WithTags("Accounting commands");
+
+            app.MapPut("user/setuserroles", [Authorize(Roles = "Administrator")] async 
+                (IUserRepository userRepository, [FromBody] UserRoleSetDto userRoleSetDto) =>
+                {   
+                    if (userRepository.GetUserAsync(userRoleSetDto.UserId).Result?.Username == null)
+                        return Results.NotFound("User not found");
+
+                    if (await userRepository.SetUserRoles(userRoleSetDto))
+                        return Results.Ok("Roles have been setted");
+
+                    return Results.BadRequest("No roles setted");     
+                })
+                .Produces<UserDto>(StatusCodes.Status200OK)
+                .Produces(StatusCodes.Status404NotFound)
+                .Produces(StatusCodes.Status400BadRequest)
+                .WithName("Set user roles")
+                .WithTags("Update commands");
 
             return app;
         }
