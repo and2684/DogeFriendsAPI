@@ -12,7 +12,7 @@ namespace DogeFriendsAPI.Endpoints
     {
         public static WebApplication SetUserEndpoints(this WebApplication app)
         {
-            // Это тестовый эндпоинт, поэтому он с логикой
+            // Это тестовый эндпоинт, поэтому он с логикой, это норма
             app.MapGet("/", [Authorize] (HttpContext ctx, DataContext context) =>
             {
                 var role = ctx.User.GetLoggedUserRoles(context).Result?.OrderBy(x => x.Id).FirstOrDefault()?.Role;
