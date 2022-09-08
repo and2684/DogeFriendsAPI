@@ -2,7 +2,7 @@ namespace DogeFriendsAPI.Dto
 {
     public class UserRoleSetDto
     {
-        public int UserId { get; set; }
-        public List<int>? UserRoles { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public List<string>? UserRoles { get; set; }
     }
 }

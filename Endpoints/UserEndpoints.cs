@@ -12,9 +12,11 @@ namespace DogeFriendsAPI.Endpoints
     {
         public static WebApplication SetUserEndpoints(this WebApplication app)
         {
-            app.MapGet("/", [Authorize] (ClaimsPrincipal user) =>
+            // Это тестовый эндпоинт, поэтому он с логикой
+            app.MapGet("/", [Authorize] (HttpContext ctx, DataContext context) =>
             {
-                return $"Welcome to DogeFriends, my dearest {user.GetLoggedUserRole()} {user.GetLoggedUsername()} :)";
+                var role = ctx.User.GetLoggedUserRoles(context).Result?.OrderBy(x => x.Id).FirstOrDefault()?.Role;
+                return $"Welcome to DogeFriends, my dearest {role} {ctx.User.GetLoggedUsername()} :)";
             })
                 .Produces(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status401Unauthorized)
@@ -112,7 +114,7 @@ namespace DogeFriendsAPI.Endpoints
             app.MapPut("user/setuserroles", [Authorize(Roles = "Administrator")] async 
                 (IUserRepository userRepository, [FromBody] UserRoleSetDto userRoleSetDto) =>
                 {   
-                    if (userRepository.GetUserAsync(userRoleSetDto.UserId).Result?.Username == null)
+                    if (userRepository.GetPersonsAsync(userRoleSetDto.Username).Result?.FirstOrDefault() == null)
                         return Results.NotFound("User not found");
 
                     if (await userRepository.SetUserRoles(userRoleSetDto))

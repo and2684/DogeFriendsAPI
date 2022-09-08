@@ -22,7 +22,7 @@ namespace DogeFriendsAPI.Services
             {
                 new Claim(JwtRegisteredClaimNames.Name, user.Username!), // Claims - что хранит токен (здесь субъект токена - это имя пользователя)
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
-                new Claim(ClaimTypes.Role, "Administrator") // Добавить role к юзеру позже
+                new Claim(ClaimTypes.Role, user.Roles!.FirstOrDefault()!.Role) 
             };
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature); // Ключ для токена            

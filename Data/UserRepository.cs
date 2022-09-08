@@ -154,7 +154,7 @@ namespace DogeFriendsAPI.Data
         {
             var user = await _context.Users
                 .Include(x => x.Roles)
-                .Where(x => x.Id == userRoleSetDto.UserId)
+                .Where(x => x.Username.ToLower() == userRoleSetDto.Username.ToLower())
                 .FirstOrDefaultAsync();
 
             user!.Roles!.RemoveAll(x => true); // Чистим список ролей Юзера
@@ -162,7 +162,7 @@ namespace DogeFriendsAPI.Data
             // И заполняем новым списком
             foreach(var role in userRoleSetDto.UserRoles!)
             {
-                var userRole = await _context.Roles.FindAsync(role);
+                var userRole = await _context.Roles.Where(x => x.Role.ToLower() == role.ToLower()).FirstOrDefaultAsync();
                 if (userRole != null)
                     user!.Roles.Add(userRole);
             }

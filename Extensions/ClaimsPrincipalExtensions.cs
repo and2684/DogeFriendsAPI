@@ -15,9 +15,11 @@ namespace Extensions
             return int.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value!);
         }         
 
-        public static string GetLoggedUserRole(this ClaimsPrincipal user)
+        public static async Task<List<UserRole>?> GetLoggedUserRoles(this ClaimsPrincipal user, DataContext context)
         {
-            return user.FindFirst(ClaimTypes.Role)?.Value!;
+            var users = await context.Users.Include(r => r.Roles).Where(x => x.Username == GetLoggedUsername(user)).ToListAsync();
+            var roles = users?.FirstOrDefault()?.Roles?.ToList();
+            return roles;
         }
 
     }
