@@ -15,9 +15,9 @@ namespace DogeFriendsAPI.Services
 
         public MicrosoftTranslateService(IConfiguration config)
         {
-            _key = config["MicrosoftTranslate:Key"];
-            _uri = config["MicrosoftTranslate:Uri"];
-            _host = config["MicrosoftTranslate:Host"];
+            _key = config["MicrosoftTranslated:Key"];
+            _uri = config["MicrosoftTranslated:Uri"];
+            _host = config["MicrosoftTranslated:Host"];
         }
 
         public async Task<string> Translate(string input)
