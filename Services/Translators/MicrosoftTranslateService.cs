@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Headers;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 
 namespace DogeFriendsAPI.Services
 {
@@ -57,7 +52,7 @@ namespace DogeFriendsAPI.Services
                 return strSource.Substring(Start, End - Start);
             }
 
-            return "";
+            return string.Empty;
         }
     }
 }

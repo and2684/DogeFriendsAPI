@@ -1,13 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Security.Claims;
-using DogeFriendsAPI.Dto;
+﻿using DogeFriendsAPI.Dto;
 using DogeFriendsAPI.XmlSerialization;
 using Extensions;
 using Microsoft.AspNetCore.Authorization;
 
 namespace DogeFriendsAPI.Endpoints
 {
-    [SuppressMessage("ReSharper", "CommentTypo")]
     public static class UserEndpoints
     {
         public static WebApplication SetUserEndpoints(this WebApplication app)

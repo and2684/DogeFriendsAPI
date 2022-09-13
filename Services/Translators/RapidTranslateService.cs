@@ -2,13 +2,13 @@ using System.Text.Json.Nodes;
 
 namespace DogeFriendsAPI.Services
 {
-    public class TranslateService : ITranslateService
+    public class RapidTranslateService : ITranslateService
     {
         private readonly string _key;
         private readonly string _host;
         private readonly string _uri;
 
-        public TranslateService(IConfiguration config)
+        public RapidTranslateService(IConfiguration config)
         {
             _key = config["Rapid:Key"];
             _host = config["Rapid:Host"];

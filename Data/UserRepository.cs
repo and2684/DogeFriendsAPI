@@ -35,7 +35,7 @@ namespace DogeFriendsAPI.Data
         public async Task<List<UserShowDto>> GetUsersAsync(string username)
         {
             var users = await _context.Users.Where(x => x.Username.ToLower().Contains(username.ToLower())).ToListAsync();
-            return _mapper.Map<List<User>, List<UserShowDto>>(users); ;
+            return _mapper.Map<List<User>, List<UserShowDto>>(users);
         }
 
         public async Task<List<PersonDto>> GetPersonsAsync(string fullname)

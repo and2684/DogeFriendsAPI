@@ -20,6 +20,11 @@ namespace API.Helpers
             //     .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
             //     .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
             //     .ForMember(dest => dest.IsCompany, opt => opt.MapFrom(src => src.IsCompany));    
+
+            CreateMap<Dog, DogDto>()
+                .ForMember(dest => dest.BreedName, opt => opt.MapFrom(src => src.Breed!.BreedName))
+                .ForMember(dest => dest.MainPhoto, opt => opt.MapFrom(src => src.Photos!.Where(x => x.IsMain).Select(x => x.Photo)))
+                .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => $"{src.User!.FirstName} {src.User.LastName}".Trim()));
         }
     }
 }
