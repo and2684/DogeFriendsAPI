@@ -13,7 +13,8 @@ namespace DogeFriendsAPI.Interfaces
         public Task<Boolean> DeleteUserAsync(int id);
         public Task<UserDto> RegisterUser(RegisterDto registerDto);
         public Task<UserDto> LoginUser(LoginDto loginDto);
-        public Task<Boolean> UserExist(string username);
+        public Task<Boolean> UserExist(int userId);
+        public Task<Boolean> UserExist(string username);        
         public Task<Boolean> PasswordCorrect(LoginDto loginDto);
         public Task<bool> SetUserRoles(UserRoleSetDto userRoleSetDto);
         public Task SaveChangesAsync();

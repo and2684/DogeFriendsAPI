@@ -133,7 +133,7 @@ namespace DogeFriendsAPI.Data
 
         public async Task<bool> UserExist(string username)
         {
-            return await _context.Users.Where(x => x.Username.ToLower() == username.ToLower()).AnyAsync();; // if user found return true
+            return await _context.Users.Where(x => x.Username.ToLower() == username.ToLower()).AnyAsync(); // if user found return true
         }
         public async Task<bool> PasswordCorrect(LoginDto loginDto)
         {
@@ -168,6 +168,11 @@ namespace DogeFriendsAPI.Data
             }
 
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> UserExist(int userId)
+        {
+            return await _context.Users.FindAsync(userId) != null; // if user found return true
         }
     }
 }

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DogeFriendsAPI.Dto;
 
 namespace DogeFriendsAPI.Data
@@ -66,7 +62,9 @@ namespace DogeFriendsAPI.Data
 
         public async Task<DogDto?> UpdateDogAsync(DogDto dog)
         {
-            var dbDog = new Dog();
+            var dbDog = await _context.Dogs.FirstOrDefaultAsync(x => x.Id == dog.Id);
+            if (dbDog == null) return null;
+
             dbDog.Name = dog.Name;
             dbDog.BreedId = dog.BreedId;
             dbDog.Breed = await _context.Breeds.FindAsync(dog.BreedId);
