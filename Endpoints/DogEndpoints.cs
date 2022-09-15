@@ -1,7 +1,4 @@
 using DogeFriendsAPI.Dto;
-using DogeFriendsAPI.XmlSerialization;
-using Extensions;
-using Microsoft.AspNetCore.Authorization;
 
 namespace DogeFriendsAPI.Endpoints
 {
@@ -9,27 +6,28 @@ namespace DogeFriendsAPI.Endpoints
     {
         public static WebApplication SetDogEndpoints(this WebApplication app)
         {
-            app.MapGet("/dog/user/{id}", async (IUserRepository userRepository, IDogRepository dogRepository, int userId) =>
+            app.MapGet("user/{userId}/dogs", async (IUserRepository userRepository, IDogRepository dogRepository, int userId) =>
             {
                 if (!userRepository.UserExist(userId).Result)
                     return Results.NotFound("User not found.");
 
-                return await dogRepository.GetAllUserDogsAsync(userId) is List<DogDto> dogDto 
+                return await dogRepository.GetAllUserDogsAsync(userId) is List<DogDto> dogDto && dogDto.Count() > 0
                     ? Results.Ok(dogDto) 
                     : Results.NoContent();
             })
             .Produces<List<DogDto>>()
             .Produces(StatusCodes.Status204NoContent)
+            .Produces(StatusCodes.Status404NotFound)
             .WithName("Get all user dogs")
             .WithTags("Dog endpoints");
 
-            app.MapGet("/dog/{id}", async (IDogRepository dogRepository, int dogId) =>
+            app.MapGet("/dog/{dogId}", async (IDogRepository dogRepository, int dogId) =>
             {
-                return await dogRepository.GetDogAsync(dogId) is Dog dog 
-                    ? Results.Ok(dog) 
+                return await dogRepository.GetDogAsync(dogId) is DogDto dogDto 
+                    ? Results.Ok(dogDto) 
                     : Results.NoContent();
             })
-            .Produces<Dog>()
+            .Produces<DogDto>()
             .Produces(StatusCodes.Status204NoContent)
             .WithName("Get dog by id")
             .WithTags("Dog endpoints");     
@@ -58,7 +56,7 @@ namespace DogeFriendsAPI.Endpoints
             .WithName("Update dog")
             .WithTags("Dog endpoints");                        
 
-            app.MapDelete("/dog", async (IDogRepository dogRepository, int dogId) =>
+            app.MapDelete("/dog/{dogId}", async (IDogRepository dogRepository, int dogId) =>
             {
                 return await dogRepository.DeleteDogAsync(dogId) 
                     ? Results.Ok("Dog deleted sucessfully.")

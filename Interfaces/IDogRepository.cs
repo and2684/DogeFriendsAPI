@@ -6,7 +6,7 @@ namespace DogeFriendsAPI.Interfaces
     public interface IDogRepository
     {
         public Task<List<DogDto>> GetAllUserDogsAsync(int userId);
-        public Task<Dog?> GetDogAsync(int id);
+        public Task<DogDto?> GetDogAsync(int id);
         public Task<DogDto> InsertDogAsync(DogDto dog);
         public Task<DogDto?> UpdateDogAsync(DogDto dog);
         public Task<Boolean> DeleteDogAsync(int id);               

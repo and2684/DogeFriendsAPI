@@ -4,6 +4,7 @@ using API.Middleware;
 using NLog;
 using Microsoft.OpenApi.Models;
 using DogeFriendsAPI.Services;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,10 +24,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
+
 //builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IDogRepository, DogRepository>();
+
 builder.Services.AddSingleton<ITokenService, TokenService>();
 builder.Services.AddScoped<ITranslateService, MicrosoftTranslateService>();
 builder.Services.AddAutoMapper(typeof(AutomapperProfiles).Assembly);
@@ -96,5 +104,6 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 app.SetUserEndpoints();
 app.SetTestEndpoints();
+app.SetDogEndpoints();
 
 app.Run();

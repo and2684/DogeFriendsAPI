@@ -22,26 +22,26 @@ namespace DogeFriendsAPI.Endpoints
 
             app.MapGet("/user", async (IUserRepository userRepository) =>
                 Results.Ok(await userRepository.GetAllUsersAsync()))
-                .Produces<User>()
+                .Produces<List<UserShowDto>>()
                 .WithName("Get all users")
                 .WithTags("Get commands");
 
             app.MapGet("/user/xml", async (IUserRepository userRepository) =>
                 Results.Extensions.ConvertToXml(await userRepository.GetAllUsersAsync()))
-                .Produces<User>()
+                .Produces<List<UserShowDto>>()
                 .WithName("Get all users as xml")
                 .WithTags("Get commands");
 
             app.MapGet("/user/{id}", async (IUserRepository userRepository, int id) =>
                 await userRepository.GetUserAsync(id) is UserShowDto userShowDto ? Results.Ok(userShowDto) : Results.NotFound("User not found."))
-                .Produces<List<User>>()
+                .Produces<UserShowDto>()
                 .Produces(StatusCodes.Status404NotFound)
                 .WithName("Get user by id")
                 .WithTags("Get commands");
 
             app.MapGet("/user/search/username/{username}", async (IUserRepository userRepository, string username) =>
                 await userRepository.GetUsersAsync(username) is List<UserShowDto> userList ? Results.Ok(userList) : Results.NotFound("User not found."))
-                .Produces<List<User>>()
+                .Produces<List<UserShowDto>>()
                 .Produces(StatusCodes.Status404NotFound)
                 .WithName("Get user by username")
                 .WithTags("Get commands");
@@ -49,7 +49,7 @@ namespace DogeFriendsAPI.Endpoints
 
             app.MapGet("/person/search/{fullname}", async (IUserRepository userRepository, string fullname) =>
                 await userRepository.GetPersonsAsync(fullname) is List<PersonDto> userList ? Results.Ok(userList) : Results.NotFound("Person not found."))
-                .Produces<List<User>>()
+                .Produces<List<PersonDto>>()
                 .Produces(StatusCodes.Status404NotFound)
                 .WithName("Get person")
                 .WithTags("Get commands");

@@ -14,7 +14,7 @@ namespace DogeFriendsAPI.Data
 
         public async Task<bool> DeleteDogAsync(int id)
         {
-            var dbDog = _context.Dogs.FindAsync(id);
+            var dbDog = _context.Dogs.FindAsync(id).Result;
             if (dbDog == null)
                 return false;
 
@@ -35,14 +35,23 @@ namespace DogeFriendsAPI.Data
         public async Task<List<DogDto>> GetAllUserDogsAsync(int userId)
         {
             var dbUser = await _context.Users.FindAsync(userId);
-            var dbUserdogs = await _context.Dogs.Where(x => x.User == dbUser).ToListAsync();
+            var dbUserdogs = await _context.Dogs
+                .Include(d => d.Breed)
+                .Where(x => x.User == dbUser)
+                .ToListAsync();
 
             return _mapper.Map<List<Dog>, List<DogDto>>(dbUserdogs);
         }
 
-        public async Task<Dog?> GetDogAsync(int id)
+        public async Task<DogDto?> GetDogAsync(int id)
         {
-            return await _context.Dogs.FindAsync(id);
+            var doge = await _context.Dogs
+                .Include(b => b.Breed)
+                .Include(u => u.User)
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            return _mapper.Map<Dog, DogDto>(doge!);
         }
 
         public async Task<DogDto> InsertDogAsync(DogDto dog)
@@ -74,7 +83,7 @@ namespace DogeFriendsAPI.Data
             _context.Update(dbDog);
             await SaveChangesAsync();
 
-            return dog;
+            return _mapper.Map<Dog, DogDto>(dbDog);
         }
 
         public async Task SaveChangesAsync()
