@@ -16,10 +16,10 @@ namespace DogeFriendsAPI.Endpoints
 
                 return await dogRepository.GetAllUserDogsAsync(userId) is List<DogDto> dogDto 
                     ? Results.Ok(dogDto) 
-                    : Results.NotFound("User have no dogs.");
+                    : Results.NoContent();
             })
             .Produces<List<DogDto>>()
-            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status204NoContent)
             .WithName("Get all user dogs")
             .WithTags("Dog endpoints");
 
@@ -27,10 +27,10 @@ namespace DogeFriendsAPI.Endpoints
             {
                 return await dogRepository.GetDogAsync(dogId) is Dog dog 
                     ? Results.Ok(dog) 
-                    : Results.NotFound("Dog not found.");
+                    : Results.NoContent();
             })
             .Produces<Dog>()
-            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status204NoContent)
             .WithName("Get dog by id")
             .WithTags("Dog endpoints");     
 
@@ -44,7 +44,31 @@ namespace DogeFriendsAPI.Endpoints
             .Produces<DogDto>(StatusCodes.Status201Created)            
             .Produces(StatusCodes.Status400BadRequest)
             .WithName("Add dog")
-            .WithTags("Dog endpoints");             
+            .WithTags("Dog endpoints");        
+
+            app.MapPut("/dog", async (IDogRepository dogRepository, [FromBody] DogDto dog) =>
+            {
+                return await dogRepository.UpdateDogAsync(dog) is DogDto dogDto 
+                    ? Results.Ok(dogDto) 
+                    : Results.BadRequest("Dog cannot be updated.");
+            })
+            .Accepts<DogDto>("application/json")
+            .Produces<DogDto>(StatusCodes.Status200OK)            
+            .Produces(StatusCodes.Status400BadRequest)
+            .WithName("Update dog")
+            .WithTags("Dog endpoints");                        
+
+            app.MapDelete("/dog", async (IDogRepository dogRepository, int dogId) =>
+            {
+                return await dogRepository.DeleteDogAsync(dogId) 
+                    ? Results.Ok("Dog deleted sucessfully.")
+                    : Results.BadRequest("Dog cannot be deleted.");
+            })
+            .Accepts<DogDto>("application/json")
+            .Produces<DogDto>(StatusCodes.Status200OK)            
+            .Produces(StatusCodes.Status400BadRequest)
+            .WithName("Delete dog")
+            .WithTags("Dog endpoints");              
 
             return app;
         }
