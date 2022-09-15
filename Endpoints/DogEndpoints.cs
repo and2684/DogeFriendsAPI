@@ -64,8 +64,7 @@ namespace DogeFriendsAPI.Endpoints
                     ? Results.Ok("Dog deleted sucessfully.")
                     : Results.BadRequest("Dog cannot be deleted.");
             })
-            .Accepts<DogDto>("application/json")
-            .Produces<DogDto>(StatusCodes.Status200OK)            
+            .Produces(StatusCodes.Status200OK)            
             .Produces(StatusCodes.Status400BadRequest)
             .WithName("Delete dog")
             .WithTags("Dog endpoints");              
