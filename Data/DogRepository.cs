@@ -66,7 +66,7 @@ namespace DogeFriendsAPI.Data
             _context.Add(dbDog);
             await SaveChangesAsync();
 
-            return dog;
+            return _mapper.Map<Dog, DogDto>(dbDog);;
         }
 
         public async Task<DogDto?> UpdateDogAsync(DogDto dog)
